@@ -1,0 +1,9 @@
+title Käyttäjä tallentaa muistiinpanon osoitteessa https://fullstack-exampleapp.herokuapp.com/spa
+
+note over Selain:
+Selain suorittaa tapahtumankäsittelijän, joka luo uuden muistiinpanon
+ja piirtää sen selaimessa muun listan mukana.
+end note
+Selain->Palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+Palvelin-->Selain: STATUS CODE 201
+

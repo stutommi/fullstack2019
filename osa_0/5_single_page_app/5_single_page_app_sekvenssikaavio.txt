@@ -1,0 +1,17 @@
+title Käyttäjä menee selaimella osoitteeseen https://fullstack-exampleapp.herokuapp.com/notes
+
+Selain->Palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+Palvelin-->Selain: STATUS CODE 200 - HTML-koodi
+Selain->Palvelin: HTTP GET .../main.css
+Palvelin-->Selain: STATUS CODE 200 - CSS-koodi
+Selain->Palvelin: HTTP GET .../spa.js
+Palvelin-->Selain: STATUS CODE 200 - JavaScript-koodi
+note over Selain:
+Selain suorittaa js-koodia, joka sisältää
+pyynnön palvelimelle
+end note
+Selain->Palvelin: HTTP GET .../data.json
+Palvelin-->Selain: STATUS CODE 200 - JSON-data
+note over Selain:
+Selain suorittaa tapahtumankäsittelijän, joka renderöi JSON-datan muistiinpanot näytölle
+end note
