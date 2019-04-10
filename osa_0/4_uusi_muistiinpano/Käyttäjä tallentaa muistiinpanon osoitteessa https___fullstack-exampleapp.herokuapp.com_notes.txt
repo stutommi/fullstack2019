@@ -1,0 +1,21 @@
+title Käyttäjä tallentaa muistiinpanon osoitteessa https://fullstack-exampleapp.herokuapp.com/notes
+
+Selain->Palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+Palvelin-->Selain: STATUS CODE 302 - Uudelleenohjaus osoitteeseen .../notes
+Selain->Palvelin: HTTP GET .../notes
+Palvelin-->Selain: STATUS CODE 200 - HTML-koodi
+Selain->Palvelin: HTTP GET .../main.css
+Palvelin-->Selain: STATUS CODE 200 - CSS-koodi
+Selain->Palvelin: HTTP GET .../main.js
+Palvelin-->Selain: STATUS CODE 200 - JavaScript-koodi
+note over Selain: 
+Selain alkaa suorittamaan js-koodia joka pyytää
+JSON-dataa palvelimelta
+end note
+Selain->Palvelin: HTTP GET .../data.json
+Palvelin-->Selain: STATUS CODE 200 - JSON-dataa
+note over Selain:
+Selain suorittaa JSON-dataan liittyvän eventhandlerin
+sisältämän toiminnallisuuden, tässä tapauksessa JSON-datan
+liittämisen osaksi HTML:ää hyödyntäen DOM-apia
+end note
