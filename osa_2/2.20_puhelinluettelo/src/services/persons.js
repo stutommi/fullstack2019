@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../node_modules/axios'
 const baseUrl = 'http://localhost:3001/persons'
 
 const getAll = () => {

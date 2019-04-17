@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from '../node_modules/react'
 import "./app.css"
 import Person from "./components/Person"
 import FilterField from "./components/FilterField"
 import PersonForm from "./components/PersonForm"
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -11,6 +12,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState('')
+  const [statusColor, setStatusColor] = useState("white")
 
   useEffect(() => {
     personService
@@ -37,23 +40,44 @@ const App = () => {
                 ? person
                 : updatedPerson
             ))
+
+            setMessage(`Henkilön ${newName} puhelinnumero vaihdettu: ${updatedPerson.number}`)
+            setStatusColor('lightGreen')
+            clearNotification()
+          }).catch(error => {
+            setMessage(`Henkilö ${newName} oli jo poistettu`)
+            setStatusColor('red')
+            clearNotification()
           })
       }
     } else {
       personService.create(newPerson)
-        .then(returnedPerson => setPersons(persons.concat(returnedPerson)))
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+
+          setMessage(`Henkilö ${newName} lisättiin`)
+          setStatusColor('lightGreen')
+          clearNotification()
+        })
     }
 
   }
 
   const removePerson = (id) => () => {
-    const result = window.confirm(`Poistetaanko ${persons.find(p => p.id).name}`)
+    const name = persons.find(p => p.id === id).name
+
+    const result = window.confirm(`Poistetaanko ${name}`)
 
     if (result) {
       personService.remove(id)
 
       const updatedArray = persons.filter(person => person.id !== id)
       setPersons(updatedArray)
+
+
+      setMessage(`${name} poistettiin`)
+      setStatusColor('lightGreen')
+      clearNotification()
     }
   }
 
@@ -71,9 +95,18 @@ const App = () => {
       handleClick={removePerson(person.id)}
     />)
 
+  const clearNotification = () =>
+    setTimeout(() => {
+      setMessage(null)
+      setStatusColor('white')
+    }, 3000)
+
   return (
     <>
       <h2>Puhelinluettelo</h2>
+      <Notification
+        message={message}
+        statusColor={statusColor} />
       <form onSubmit={addPerson}>
         <FilterField handleChange={handleFilterChange} />
         <h3>Lisää uusi</h3>
