@@ -47,6 +47,7 @@ const App = () => {
           }).catch(error => {
             setMessage(`Henkilö ${newName} oli jo poistettu`)
             setStatusColor('red')
+            setPersons(persons.filter(p => p.name !== newName))
             clearNotification()
           })
       }
@@ -57,6 +58,12 @@ const App = () => {
 
           setMessage(`Henkilö ${newName} lisättiin`)
           setStatusColor('lightGreen')
+          clearNotification()
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          setMessage(`${error.response.data.error}`)
+          setStatusColor('red')
           clearNotification()
         })
     }
@@ -99,7 +106,7 @@ const App = () => {
     setTimeout(() => {
       setMessage(null)
       setStatusColor('white')
-    }, 3000)
+    }, 5000)
 
   return (
     <>
