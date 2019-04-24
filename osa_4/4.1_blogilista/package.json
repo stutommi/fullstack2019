@@ -4,23 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose",
+    "start": "NODE_ENV=development node index.js",
+    "watch": "NODE_ENV=test nodemon index.js",
     "lint": "eslint/.bin/eslint ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.16.0",
-    "nodemon": "^1.18.11"
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "mongoose": "^5.5.2",
     "morgan": "^1.9.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
