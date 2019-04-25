@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRhYXZldHRpIiwiaWQiOiI1Y2MxYmU4MzAwMThmNTFmMDY4YmFjNTYiLCJpYXQiOjE1NTYyMDEwOTl9.3fkvse1MNEcf4S-Ea32QqmMMUEZ9BUkdY3x4x-TUAe8
+
+{
+  "author": "KIRJOITTAJA",
+  "title": "TOKENIEN TARINA 4",
+  "url": "wWW.OLIPAKERRAN.COM",
+  "likes": 53000
+}

@@ -1,4 +1,6 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
+const bcrypt = require('bcrypt')
 
 const initialBlogs = [
   {
@@ -51,9 +53,45 @@ const initialBlogs = [
   }
 ]
 
+const initialUsers = [
+  {
+    username: 'testUsername1',
+    name: 'testName1',
+    password: 'testpassword1'
+  },
+  {
+    username: 'testUsername2',
+    name: 'testName2',
+    password: 'testpassword2'
+  },
+  {
+    username: 'testUsername3',
+    name: 'testName3',
+    password: 'testpassword3'
+  },
+  {
+    username: 'testUsername4',
+    name: 'testName4',
+    password: 'testpassword4'
+  },
+  {
+    username: 'testUsername5',
+    name: 'testName5',
+    password: 'testpassword5'
+  },
+]
+
 const blogsInDb = async () => {
   const blogs = await Blog.find({})
   return blogs.map(b => b.toJSON())
-} 
+}
 
-module.exports = {initialBlogs, blogsInDb}
+const cleanAndMountFiveUsers = async () => {
+  await User.remove({})
+
+  const noteObjects = initialUsers.map(user => new User(user))
+  const promiseArray = noteObjects.map(user => user.save())
+  await Promise.all(promiseArray)  
+}
+
+module.exports = { initialBlogs, initialUsers, blogsInDb, cleanAndMountFiveUsers}
