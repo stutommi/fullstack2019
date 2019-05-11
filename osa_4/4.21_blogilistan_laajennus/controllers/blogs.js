@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+// GET ALL BLOGS
 router.get('/', async (request, response) => {
   const blogs = await Blog.find({})
     .populate('user', { username: 1, name: 1 })
@@ -10,6 +11,7 @@ router.get('/', async (request, response) => {
   response.json(blogs.map(b => b.toJSON()))
 })
 
+// CREATE NEW BLOG
 router.post('/', async (request, response) => {
   const blog = new Blog(request.body)
 
@@ -42,6 +44,8 @@ router.post('/', async (request, response) => {
   response.status(201).json(result)
 })
 
+
+// UPDATE BLOG
 router.put('/:id', async (request, response) => {
   const { author, title, url, likes } = request.body
 
@@ -55,6 +59,7 @@ router.put('/:id', async (request, response) => {
   response.json(updatedNote.toJSON())
 })
 
+// DELETE BLOG
 router.delete('/:id', async (request, response) => {
   if (!request.token) {
     return response.status(401).json({ error: 'token missing' })
@@ -73,6 +78,19 @@ router.delete('/:id', async (request, response) => {
     response.status(204).end()
   } else {
     response.status(404).end()
+  }
+})
+
+//POST COMMENT TO BLOG
+router.put('/:id/comments', async (req, res, next) => {
+  try {
+    const blog = {
+      comments: req.body.comments
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
+    res.json(updatedBlog.toJSON())
+  } catch (exception) {
+    next(exception)
   }
 })
 
